@@ -38,14 +38,26 @@ function Skybox() {
   return null;
 }
 
-// Main model component
+// Planeta Terra component
 function Model({ position, rotation }) {
   const modelRef = useRef();
 
-  // Animation
+  // Texturas da Terra
+  const earthTexture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/WorldMap-A_non-Frame.png/1024px-WorldMap-A_non-Frame.png');
+  const bumpTexture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/5/56/Bump-map-demo-bumps.jpg');
+  
+  // Material da Terra
+  const earthMaterial = new THREE.MeshPhongMaterial({
+    map: earthTexture,
+    bumpMap: bumpTexture,
+    bumpScale: 0.1,
+    shininess: 100
+  });
+
+  // Animação de rotação da Terra
   useFrame((state, delta) => {
     if (modelRef.current) {
-      modelRef.current.rotation.y += delta * 0.1;
+      modelRef.current.rotation.y += delta * 0.2; // Rotação mais lenta
     }
   });
 
@@ -54,19 +66,12 @@ function Model({ position, rotation }) {
       ref={modelRef}
       position={position} 
       rotation={rotation}
-      scale={[1.5, 1.5, 1.5]}
+      scale={[2, 2, 2]}
       castShadow
       receiveShadow
+      material={earthMaterial}
     >
-      <boxGeometry args={[2, 2, 2]} />
-      <meshPhysicalMaterial
-        color={0x88ccff}
-        metalness={0.7}
-        roughness={0.2}
-        clearcoat={0.8}
-        clearcoatRoughness={0.2}
-        reflectivity={1.0}
-      />
+      <sphereGeometry args={[1, 64, 64]} />
     </mesh>
   );
 }
@@ -184,6 +189,8 @@ function Scene() {
     <>
       {/* Skybox */}
       <Skybox />
+      
+
       
       {/* Main model */}
       <Model position={position} rotation={rotation} />

@@ -1,34 +1,66 @@
-import { Canvas, useFrame, useThree } from '@react-three/fiber/native';
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, StyleSheet, PanResponder, Dimensions, Alert } from 'react-native';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber/native';
 
 import * as THREE from 'three';
 
-// Skybox component using cube texture
+// Skybox do Universo
 function Skybox() {
   const { scene } = useThree();
   
   useEffect(() => {
     try {
+      // Criar skybox do universo
+      const geometry = new THREE.SphereGeometry(500, 60, 40);
       
-      const geometry = new THREE.BoxGeometry(1000, 1000, 1000);
-      const materialArray = [
-        new THREE.MeshBasicMaterial({ color: 0x0077ff, side: THREE.BackSide }), // direita
-        new THREE.MeshBasicMaterial({ color: 0x00aaff, side: THREE.BackSide }), // esquerda
-        new THREE.MeshBasicMaterial({ color: 0x00ddff, side: THREE.BackSide }), // topo
-        new THREE.MeshBasicMaterial({ color: 0x005588, side: THREE.BackSide }), // base
-        new THREE.MeshBasicMaterial({ color: 0x0099ff, side: THREE.BackSide }), // frente
-        new THREE.MeshBasicMaterial({ color: 0x0088cc, side: THREE.BackSide })  // trás
-      ];
+      // Criar textura de estrelas procedural
+      const canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 1024;
+      const context = canvas.getContext('2d');
       
-      const skybox = new THREE.Mesh(geometry, materialArray);
+      // Fundo preto do espaço
+      context.fillStyle = '#000000';
+      context.fillRect(0, 0, 1024, 1024);
+      
+      // Adicionar estrelas
+      for (let i = 0; i < 2000; i++) {
+        const x = Math.random() * 1024;
+        const y = Math.random() * 1024;
+        const size = Math.random() * 2;
+        const brightness = Math.random();
+        
+        context.fillStyle = `rgba(255, 255, 255, ${brightness})`;
+        context.beginPath();
+        context.arc(x, y, size, 0, Math.PI * 2);
+        context.fill();
+      }
+      
+      // Adicionar algumas nebulosas sutis em tons de cinza
+      for (let i = 0; i < 20; i++) {
+        const x = Math.random() * 1024;
+        const y = Math.random() * 1024;
+        const size = Math.random() * 80 + 40;
+        
+        const nebulaGradient = context.createRadialGradient(x, y, 0, x, y, size);
+        nebulaGradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
+        nebulaGradient.addColorStop(1, 'transparent');
+        
+        context.fillStyle = nebulaGradient;
+        context.fillRect(x - size, y - size, size * 2, size * 2);
+      }
+      
+      const texture = new THREE.CanvasTexture(canvas);
+      const material = new THREE.MeshBasicMaterial({ 
+        map: texture, 
+        side: THREE.BackSide 
+      });
+      
+      const skybox = new THREE.Mesh(geometry, material);
       scene.add(skybox);
-      
-
       
       return () => {
         scene.remove(skybox);
-        scene.background = null;
       };
     } catch (error) {
       console.error("Erro ao carregar o skybox:", error);
@@ -189,8 +221,6 @@ function Scene() {
     <>
       {/* Skybox */}
       <Skybox />
-      
-
       
       {/* Main model */}
       <Model position={position} rotation={rotation} />

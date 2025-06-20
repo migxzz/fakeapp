@@ -1,0 +1,64 @@
+# Blender MTL File: 'food-container-041.blend'
+# Material Count: 5
+
+newmtl cherry-tomatoes-001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump textures/cherry-tomatoes-001-nrm-metalness-4k.png
+map_Ns textures/cherry-tomatoes-001-roughness-metalness-4k.png
+refl textures/cherry-tomatoes-001-metalness-metalness-4k.png
+
+newmtl corn-grains-001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump textures/corn-grains-001_nrm-metalness-4k.png
+map_Ns textures/corn-grains-001_roughness-metalness-4k.png
+
+newmtl food-container-041
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump textures/food-container-041_nrm-metalness-4k.png
+map_Ns textures/food-container-041_roughness-metalness-4k.png
+refl textures/food-container-041_metalness-metalness-4k.png
+
+newmtl green-peas-001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump textures/green-peas-001_nrm-metalness-4k.png
+map_Ns textures/green-peas-001_roughness-metalness-4k.png
+
+newmtl shredded-carrot-001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump textures/shredded-carrot-001_nrm-metalness-4k.png
+map_Ns textures/shredded-carrot-001_roughness-metalness-4k.png

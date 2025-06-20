@@ -1,50 +1,40 @@
-# Welcome to your Expo app 👋
+# Animação 3D com Three.js e SkyBox
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este projeto implementa uma animação 3D interativa utilizando Three.js com técnicas de SkyBox e controles personalizados de teclado e mouse.
 
-## Get started
+## Características
 
-1. Install dependencies
+- Modelo 3D interativo
+- SkyBox para ambiente 3D imersivo
+- Controles de teclado para movimentação e rotação do objeto
+- Controles de mouse personalizados para orbitar a câmera
+- Iluminação e sombras
 
-   ```bash
-   npm install
-   ```
+## Como usar
 
-2. Start the app
+1. Navegue até a aba "3D SkyBox" no menu inferior
+2. Interaja com o modelo 3D usando:
+   - **W/S/A/D/Q/E**: Mover o objeto
+   - **Setas**: Rotacionar o objeto
+   - **Mouse**: Clique e arraste para orbitar a câmera
+   - **Roda do mouse**: Zoom
 
-   ```bash
-   npx expo start
-   ```
+## Configuração do SkyBox
 
-In the output, you'll find options to open the app in a
+Para completar a implementação do SkyBox, adicione 6 imagens na pasta `assets/skybox/`:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. px.jpg - Face positiva X (direita)
+2. nx.jpg - Face negativa X (esquerda)
+3. py.jpg - Face positiva Y (cima)
+4. ny.jpg - Face negativa Y (baixo)
+5. pz.jpg - Face positiva Z (frente)
+6. nz.jpg - Face negativa Z (trás)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Depois de adicionar as imagens, descomente o código do SkyBox no arquivo `app/enhanced3d.tsx`.
 
-## Get a fresh project
+## Tecnologias utilizadas
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- React Native
+- Expo
+- Three.js
+- React Three Fiber

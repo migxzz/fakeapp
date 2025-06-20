@@ -32,7 +32,7 @@ export default function HomeScreen() {
         contentContainerStyle={styles.scrollContent}
       >
         <ThemedView style={styles.header}>
-          <ThemedText type="title">Delícias Delivery</ThemedText>
+          <ThemedText type="title">Migxzz Delivery</ThemedText>
           <ThemedText style={styles.subtitle}>
             Comida deliciosa entregue na sua porta
           </ThemedText>

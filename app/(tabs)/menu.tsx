@@ -14,10 +14,14 @@ import { ThemedView } from '@/components/ThemedView';
 import FoodCard from '@/components/FoodCard';
 import CategoryFilter from '@/components/CategoryFilter';
 import { foodItems, categories } from '@/services/foodData';
+import { useCart } from '@/contexts/CartContext';
+import { useToast } from '@/contexts/ToastContext';
 
 export default function MenuScreen() {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const { addToCart } = useCart();
+  const { showToast } = useToast();
 
   const filteredItems = selectedCategory === 'all'
     ? foodItems
@@ -29,14 +33,19 @@ export default function MenuScreen() {
     router.push(`/food/${id}`);
   };
 
+  const handleAddToCart = (item: { id: string; name: string; price: number; image: string }) => {
+    addToCart(item);
+    showToast(`${item.name} adicionado à nave! 🚀`);
+  };
+
   return (
     <ThemedView style={styles.container}>
       <StatusBar style="auto" />
       
       <ThemedView style={styles.header}>
-        <ThemedText type="title">Nosso Cardápio</ThemedText>
+        <ThemedText type="title">Cardápio Galáctico</ThemedText>
         <ThemedText style={styles.subtitle}>
-          Explore nossas deliciosas opções
+          Explore sabores de toda a galáxia
         </ThemedText>
       </ThemedView>
 
@@ -64,14 +73,15 @@ export default function MenuScreen() {
               image={item.image}
               description={item.description}
               onPress={handleFoodPress}
+              onAddToCart={handleAddToCart}
             />
           </Animated.View>
         )}
         ListEmptyComponent={
           <ThemedView style={styles.emptyContainer}>
-            <Ionicons name="restaurant-outline" size={64} color="#ccc" />
+            <Ionicons name="planet-outline" size={64} color="#8B5CF6" />
             <ThemedText style={styles.emptyText}>
-              Nenhum item encontrado nesta categoria
+              Nenhum prato encontrado neste planeta
             </ThemedText>
           </ThemedView>
         }
@@ -84,6 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: '#000011',
   },
   header: {
     marginBottom: 16,

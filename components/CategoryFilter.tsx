@@ -72,17 +72,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginRight: 8,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#6B7280',
     backgroundColor: 'transparent',
   },
   selectedCategory: {
-    backgroundColor: '#FF6B6B',
-    borderColor: '#FF6B6B',
+    backgroundColor: '#8B5CF6',
+    borderColor: '#8B5CF6',
   },
   categoryText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#000000',
+    color: '#FFFFFF',
   },
   selectedCategoryText: {
     color: '#FFFFFF',

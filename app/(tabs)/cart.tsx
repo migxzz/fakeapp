@@ -12,19 +12,20 @@ import Animated, {
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useCart } from '@/contexts/CartContext';
 
 // Dados de exemplo para o carrinho
 const cartItems = [
   {
     id: '1',
-    name: 'Hambúrguer Artesanal',
+    name: 'Hambúrguer Galáctico',
     price: 28.90,
     image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1398&auto=format&fit=crop',
     quantity: 2,
   },
   {
     id: '5',
-    name: 'Macarrão à Carbonara',
+    name: 'Macarrão Nebulosa',
     price: 36.90,
     image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=1471&auto=format&fit=crop',
     quantity: 1,
@@ -32,25 +33,11 @@ const cartItems = [
 ];
 
 export default function CartScreen() {
-  const [items, setItems] = React.useState(cartItems);
-
-  const updateQuantity = (id: string, change: number) => {
-    setItems(prevItems => 
-      prevItems.map(item => {
-        if (item.id === id) {
-          const newQuantity = Math.max(0, item.quantity + change);
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      }).filter(item => item.quantity > 0)
-    );
-  };
-
-  const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const { items, updateQuantity, totalPrice } = useCart();
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title" style={styles.title}>Seu Carrinho</ThemedText>
+      <ThemedText type="title" style={styles.title}>Nave de Carga</ThemedText>
       
       {items.length > 0 ? (
         <>
@@ -75,14 +62,14 @@ export default function CartScreen() {
                     style={styles.quantityButton}
                     onPress={() => updateQuantity(item.id, -1)}
                   >
-                    <Ionicons name="remove" size={18} color="#FF6B6B" />
+                    <Ionicons name="remove" size={18} color="#FFFFFF" />
                   </TouchableOpacity>
                   <ThemedText style={styles.quantity}>{item.quantity}</ThemedText>
                   <TouchableOpacity 
                     style={styles.quantityButton}
                     onPress={() => updateQuantity(item.id, 1)}
                   >
-                    <Ionicons name="add" size={18} color="#FF6B6B" />
+                    <Ionicons name="add" size={18} color="#FFFFFF" />
                   </TouchableOpacity>
                 </View>
               </Animated.View>
@@ -111,20 +98,20 @@ export default function CartScreen() {
             
             <TouchableOpacity style={styles.checkoutButton}>
               <ThemedText style={styles.checkoutButtonText}>
-                Finalizar Pedido
+                Lançar Nave
               </ThemedText>
             </TouchableOpacity>
           </Animated.View>
         </>
       ) : (
         <ThemedView style={styles.emptyContainer}>
-          <Ionicons name="cart-outline" size={80} color="#ccc" />
+          <Ionicons name="rocket-outline" size={80} color="#8B5CF6" />
           <ThemedText style={styles.emptyText}>
-            Seu carrinho está vazio
+            Sua nave está vazia
           </ThemedText>
           <TouchableOpacity style={styles.shopButton}>
             <ThemedText style={styles.shopButtonText}>
-              Explorar Cardápio
+              Explorar Galáxia
             </ThemedText>
           </TouchableOpacity>
         </ThemedView>
@@ -137,6 +124,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: '#000011',
   },
   title: {
     marginBottom: 16,
@@ -150,12 +138,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 12,
     borderRadius: 12,
-    backgroundColor: '#f9f9f9',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    backgroundColor: '#0F0F23',
+    borderWidth: 1,
+    borderColor: '#8B5CF6',
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
   },
   itemImage: {
     width: 70,
@@ -168,7 +158,7 @@ const styles = StyleSheet.create({
   },
   itemPrice: {
     marginTop: 4,
-    color: '#FF6B6B',
+    color: '#A855F7',
   },
   quantityControl: {
     flexDirection: 'row',
@@ -178,7 +168,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#8B5CF6',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -189,8 +179,10 @@ const styles = StyleSheet.create({
   summaryContainer: {
     padding: 16,
     borderRadius: 12,
-    backgroundColor: '#f9f9f9',
-    marginBottom: 100, // Espaço para a tab bar
+    backgroundColor: '#0F0F23',
+    borderWidth: 1,
+    borderColor: '#8B5CF6',
+    marginBottom: 100,
   },
   summaryRow: {
     flexDirection: 'row',
@@ -204,14 +196,19 @@ const styles = StyleSheet.create({
     borderTopColor: '#eee',
   },
   totalPrice: {
-    color: '#FF6B6B',
+    color: '#A855F7',
   },
   checkoutButton: {
-    backgroundColor: '#FF6B6B',
+    backgroundColor: '#8B5CF6',
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
     marginTop: 16,
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
   },
   checkoutButtonText: {
     color: 'white',
@@ -231,11 +228,16 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   shopButton: {
-    backgroundColor: '#FF6B6B',
+    backgroundColor: '#8B5CF6',
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
     width: '80%',
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
   },
   shopButtonText: {
     color: 'white',

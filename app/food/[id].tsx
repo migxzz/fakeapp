@@ -18,6 +18,8 @@ import Animated, {
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { foodItems } from '@/services/foodData';
+import { useCart } from '@/contexts/CartContext';
+import { useToast } from '@/contexts/ToastContext';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const IMAGE_HEIGHT = SCREEN_HEIGHT * 0.4;
@@ -95,10 +97,23 @@ export default function FoodDetailScreen() {
     };
   });
   
+  const { addToCart } = useCart();
+  const { showToast } = useToast();
+  
   const handleAddToCart = () => {
     buttonScale.value = withSpring(0.9, {}, () => {
       buttonScale.value = withSpring(1);
     });
+    
+    // Adicionar ao carrinho
+    addToCart({
+      id: food.id,
+      name: food.name,
+      price: food.price,
+      image: food.image
+    });
+    
+    showToast(`${food.name} adicionado à nave! 🚀`);
   };
   
   const handleToggleFavorite = () => {
@@ -130,7 +145,7 @@ export default function FoodDetailScreen() {
   if (!food) {
     return (
       <ThemedView style={styles.notFound}>
-        <ThemedText>Produto não encontrado</ThemedText>
+        <ThemedText>Produto não encontrado na galáxia</ThemedText>
       </ThemedView>
     );
   }
@@ -195,7 +210,7 @@ export default function FoodDetailScreen() {
             <View style={styles.ingredientsList}>
               {food.ingredients.map((ingredient, index) => (
                 <View key={index} style={styles.ingredientItem}>
-                  <Ionicons name="checkmark-circle" size={18} color="#FF6B6B" />
+                  <Ionicons name="checkmark-circle" size={18} color="#8B5CF6" />
                   <ThemedText style={styles.ingredientText}>{ingredient}</ThemedText>
                 </View>
               ))}
@@ -211,7 +226,7 @@ export default function FoodDetailScreen() {
           onPress={handleAddToCart}
         >
           <ThemedText style={styles.addToCartText}>
-            Adicionar ao Carrinho
+            Adicionar à Nave
           </ThemedText>
         </TouchableOpacity>
       </Animated.View>
@@ -222,6 +237,7 @@ export default function FoodDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000011',
   },
   notFound: {
     flex: 1,
@@ -234,13 +250,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 60,
-    backgroundColor: 'white',
+    backgroundColor: '#0F0F23',
     zIndex: 10,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 50,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: '#8B5CF6',
   },
   backButton: {
     position: 'absolute',
@@ -284,9 +300,11 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: 20,
     marginTop: -30,
-    backgroundColor: 'white',
+    backgroundColor: '#0F0F23',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+    borderWidth: 1,
+    borderColor: '#8B5CF6',
   },
   name: {
     marginBottom: 8,
@@ -294,7 +312,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FF6B6B',
+    color: '#A855F7',
     marginBottom: 16,
   },
   section: {
@@ -321,19 +339,24 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 80,
-    backgroundColor: 'white',
+    backgroundColor: '#0F0F23',
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: '#8B5CF6',
     paddingHorizontal: 20,
     paddingVertical: 16,
     justifyContent: 'center',
   },
   addToCartButton: {
-    backgroundColor: '#FF6B6B',
+    backgroundColor: '#8B5CF6',
     borderRadius: 12,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
   },
   addToCartText: {
     color: 'white',

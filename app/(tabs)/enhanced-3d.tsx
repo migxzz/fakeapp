@@ -7,11 +7,11 @@ export default function Enhanced3DScreen() {
     <View style={styles.container}>
       <Enhanced3DScene />
       <View style={styles.instructions}>
-        <Text style={styles.instructionText}>Controles Avançados:</Text>
-        <Text style={styles.instructionText}>• W/S/A/D/Q/E: Mover objeto</Text>
-        <Text style={styles.instructionText}>• Setas: Rotacionar objeto</Text>
-        <Text style={styles.instructionText}>• Mouse: Clique e arraste para orbitar</Text>
-        <Text style={styles.instructionText}>• Roda do mouse: Zoom</Text>
+        <Text style={styles.instructionText}>Controles da Nave Espacial:</Text>
+        <Text style={styles.instructionText}>• W/S/A/D/Q/E: Mover a Terra</Text>
+        <Text style={styles.instructionText}>• Setas: Rotacionar planeta</Text>
+        <Text style={styles.instructionText}>• Mouse: Orbitar pelo universo</Text>
+        <Text style={styles.instructionText}>• Roda do mouse: Aproximar/Afastar</Text>
       </View>
     </View>
   );
@@ -20,20 +20,23 @@ export default function Enhanced3DScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#000011',
   },
   instructions: {
     position: 'absolute',
     bottom: 20,
     left: 20,
     right: 20,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    padding: 10,
-    borderRadius: 10,
+    backgroundColor: 'rgba(15,15,35,0.9)',
+    padding: 15,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#8B5CF6',
   },
   instructionText: {
-    color: '#fff',
+    color: '#F3F4F6',
     fontSize: 14,
     marginVertical: 2,
+    fontWeight: '500',
   },
 });

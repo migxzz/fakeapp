@@ -16,57 +16,39 @@ export default function TabLayout() {
         tabBarStyle: {
           height: 90,
           paddingBottom: 20,
+          backgroundColor: '#0F0F23',
+          borderTopColor: '#8B5CF6',
+          borderTopWidth: 1,
         },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          title: 'Planeta',
+          tabBarIcon: ({ color }) => <TabBarIcon name="planet" color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explorar',
-          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="3d"
-        options={{
-          title: '3D Básico',
-          tabBarIcon: ({ color }) => <TabBarIcon name="cube" color={color} />,
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="3d-advanced"
-        options={{
-          title: '3D Avançado',
-          tabBarIcon: ({ color }) => <TabBarIcon name="cube-outline" color={color} />,
-          headerShown: false,
-        }}
-      />
+
+
       <Tabs.Screen
         name="enhanced-3d"
         options={{
-          title: '3D SkyBox',
-          tabBarIcon: ({ color }) => <TabBarIcon name="planet" color={color} />,
+          title: 'Terra 3D',
+          tabBarIcon: ({ color }) => <TabBarIcon name="earth" color={color} />,
           headerShown: false,
         }}
       />
       <Tabs.Screen
         name="menu"
         options={{
-          title: 'Menu',
-          tabBarIcon: ({ color }) => <TabBarIcon name="menu" color={color} />,
+          title: 'Cardápio',
+          tabBarIcon: ({ color }) => <TabBarIcon name="restaurant" color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Perfil',
+          title: 'Astronauta',
           tabBarIcon: ({ color }) => <TabBarIcon name="person" color={color} />,
         }}
       />

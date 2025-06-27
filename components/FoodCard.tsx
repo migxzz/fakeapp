@@ -17,9 +17,10 @@ type FoodCardProps = {
   image: string;
   description: string;
   onPress: (id: string) => void;
+  onAddToCart?: (item: { id: string; name: string; price: number; image: string }) => void;
 };
 
-export default function FoodCard({ id, name, price, image, description, onPress }: FoodCardProps) {
+export default function FoodCard({ id, name, price, image, description, onPress, onAddToCart }: FoodCardProps) {
   const scale = useSharedValue(1);
   
   const animatedStyle = useAnimatedStyle(() => {
@@ -52,6 +53,14 @@ export default function FoodCard({ id, name, price, image, description, onPress 
             <ThemedText type="defaultSemiBold" style={styles.price}>
               R$ {price.toFixed(2)}
             </ThemedText>
+            {onAddToCart && (
+              <TouchableOpacity 
+                style={styles.addButton}
+                onPress={() => onAddToCart({ id, name, price, image })}
+              >
+                <ThemedText style={styles.addButtonText}>+</ThemedText>
+              </TouchableOpacity>
+            )}
           </View>
         </ThemedView>
       </Animated.View>
@@ -65,10 +74,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 16,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: '#8B5CF6',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 4,
+    backgroundColor: '#0F0F23',
+    borderWidth: 1,
+    borderColor: '#8B5CF6',
   },
   image: {
     height: 180,
@@ -91,6 +103,24 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 18,
-    color: '#FF6B6B',
+    color: '#A855F7',
+  },
+  addButton: {
+    backgroundColor: '#8B5CF6',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#8B5CF6',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  addButtonText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

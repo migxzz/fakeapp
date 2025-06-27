@@ -1,7 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, StyleSheet, PanResponder, Dimensions, Alert } from 'react-native';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber/native';
-
+import { Ionicons } from '@expo/vector-icons';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { ThemedText } from '@/components/ThemedText';
 import * as THREE from 'three';
 
 // Skybox do Universo
@@ -243,6 +245,20 @@ function Scene() {
 export default function Enhanced3DScene() {
   return (
     <View style={styles.container}>
+      {/* Header com frase motivacional */}
+      <Animated.View 
+        entering={FadeInDown.delay(300)}
+        style={styles.header}
+      >
+        <ThemedText style={styles.headerTitle}>Planet Food</ThemedText>
+        <ThemedText style={styles.headerSubtitle}>
+          🌍 Estamos presentes no planeta todo! 🚀
+        </ThemedText>
+        <ThemedText style={styles.headerDescription}>
+          Sabores galácticos entregues em qualquer lugar da Terra
+        </ThemedText>
+      </Animated.View>
+
       <Canvas
         gl={{ alpha: false, antialias: true }}
         camera={{ position: [0, 5, 10], fov: 45 }}
@@ -251,11 +267,94 @@ export default function Enhanced3DScene() {
       >
         <Scene />
       </Canvas>
+
+      {/* Painel de informações interativo */}
+      <Animated.View 
+        entering={FadeInUp.delay(600)}
+        style={styles.infoPanel}
+      >
+        <View style={styles.statItem}>
+          <Ionicons name="planet" size={24} color="#8B5CF6" />
+          <ThemedText style={styles.statNumber}>195</ThemedText>
+          <ThemedText style={styles.statLabel}>Países</ThemedText>
+        </View>
+        <View style={styles.statItem}>
+          <Ionicons name="rocket" size={24} color="#A855F7" />
+          <ThemedText style={styles.statNumber}>24/7</ThemedText>
+          <ThemedText style={styles.statLabel}>Entregas</ThemedText>
+        </View>
+        <View style={styles.statItem}>
+          <Ionicons name="star" size={24} color="#F59E0B" />
+          <ThemedText style={styles.statNumber}>5.0</ThemedText>
+          <ThemedText style={styles.statLabel}>Avaliação</ThemedText>
+        </View>
+      </Animated.View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    top: 60,
+    left: 20,
+    right: 20,
+    zIndex: 10,
+    backgroundColor: 'rgba(15,15,35,0.95)',
+    padding: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#8B5CF6',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#8B5CF6',
+    marginBottom: 8,
+  },
+  headerSubtitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#F3F4F6',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  headerDescription: {
+    fontSize: 14,
+    color: '#9CA3AF',
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
+  infoPanel: {
+    position: 'absolute',
+    bottom: 120,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(15,15,35,0.95)',
+    padding: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#8B5CF6',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  statItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  statNumber: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#F3F4F6',
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: '#9CA3AF',
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: '#000',

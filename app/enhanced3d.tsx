@@ -6,6 +6,8 @@ import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { ThemedText } from '@/components/ThemedText';
 import * as THREE from 'three';
 
+
+
 // Skybox do Universo
 function Skybox() {
   const { scene } = useThree();
@@ -258,22 +260,22 @@ function OrbitingSushi() {
 function Model({ position, rotation }) {
   const modelRef = useRef();
 
-  // Texturas da Terra
-  const earthTexture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/WorldMap-A_non-Frame.png/1024px-WorldMap-A_non-Frame.png');
-  const bumpTexture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/5/56/Bump-map-demo-bumps.jpg');
+  // Carregando só a textura principal
+  const earthTexture = new THREE.TextureLoader().load('/earth_albedo.jpg');
   
-  // Material da Terra
+  // Material da Terra só com textura (mais rápido)
   const earthMaterial = new THREE.MeshPhongMaterial({
-    map: earthTexture,
-    bumpMap: bumpTexture,
-    bumpScale: 0.1,
-    shininess: 100
+    map: earthTexture
   });
 
   // Animação de rotação da Terra
   useFrame((state, delta) => {
     if (modelRef.current) {
-      modelRef.current.rotation.y += delta * 0.2; // Rotação mais lenta
+      modelRef.current.rotation.y += delta * 0.2;
+      // Nuvens giram um pouco mais rápido
+      if (modelRef.current.children[1]) {
+        modelRef.current.children[1].rotation.y += delta * 0.25;
+      }
     }
   });
 
@@ -415,10 +417,12 @@ function Scene() {
       <OrbitingSoda />
       <OrbitingSushi />
       
-      {/* Lighting */}
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
-      <directionalLight position={[-10, -10, -5]} intensity={0.5} />
+      {/* Lighting - iluminando a Terra toda */}
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[10, 10, 5]} intensity={1.2} castShadow />
+      <directionalLight position={[-10, -10, -5]} intensity={1.2} />
+      <directionalLight position={[0, 0, 10]} intensity={1} />
+      <directionalLight position={[0, 0, -10]} intensity={1} />
       <pointLight position={[0, 5, 0]} intensity={0.8} />
       
       {/* Adicionar um plano para receber sombras */}

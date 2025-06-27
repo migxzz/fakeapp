@@ -72,6 +72,188 @@ function Skybox() {
   return null;
 }
 
+// Pizza orbitando component
+function OrbitingPizza() {
+  const pizzaRef = useRef();
+  const orbitRadius = 4;
+  
+  // Textura de pizza real
+  const pizzaTexture = new THREE.TextureLoader().load('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=500&auto=format&fit=crop');
+  const crustTexture = new THREE.TextureLoader().load('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500&auto=format&fit=crop');
+  
+  useFrame((state) => {
+    if (pizzaRef.current) {
+      const time = state.clock.elapsedTime;
+      pizzaRef.current.position.x = Math.cos(time * 0.5) * orbitRadius;
+      pizzaRef.current.position.z = Math.sin(time * 0.5) * orbitRadius;
+      pizzaRef.current.position.y = Math.sin(time * 0.3) * 0.5;
+      pizzaRef.current.rotation.y += 0.02;
+    }
+  });
+  
+  return (
+    <group ref={pizzaRef} scale={[0.4, 0.4, 0.4]}>
+      {/* Base da pizza */}
+      <mesh position={[0, 0, 0]}>
+        <cylinderGeometry args={[1, 1, 0.1, 32]} />
+        <meshPhongMaterial map={pizzaTexture} />
+      </mesh>
+      
+      {/* Borda da pizza */}
+      <mesh position={[0, 0.05, 0]}>
+        <torusGeometry args={[1, 0.08, 8, 32]} />
+        <meshPhongMaterial map={crustTexture} />
+      </mesh>
+      
+      {/* Pepperonis */}
+      {[...Array(8)].map((_, i) => {
+        const angle = (i / 8) * Math.PI * 2;
+        const radius = 0.6;
+        return (
+          <mesh 
+            key={i}
+            position={[
+              Math.cos(angle) * radius,
+              0.06,
+              Math.sin(angle) * radius
+            ]}
+          >
+            <cylinderGeometry args={[0.08, 0.08, 0.02, 16]} />
+            <meshPhongMaterial color={0x8B0000} />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+// Hambúrguer orbitando
+function OrbitingBurger() {
+  const burgerRef = useRef();
+  const orbitRadius = 5;
+  
+  const bunTexture = new THREE.TextureLoader().load('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500&auto=format&fit=crop');
+  
+  useFrame((state) => {
+    if (burgerRef.current) {
+      const time = state.clock.elapsedTime;
+      const offset = Math.PI / 2; // 90 graus de diferença da pizza
+      burgerRef.current.position.x = Math.cos(time * 0.5 + offset) * orbitRadius;
+      burgerRef.current.position.z = Math.sin(time * 0.5 + offset) * orbitRadius;
+      burgerRef.current.position.y = Math.sin(time * 0.4) * 0.3;
+      burgerRef.current.rotation.y += 0.015;
+    }
+  });
+  
+  return (
+    <group ref={burgerRef} scale={[0.3, 0.3, 0.3]}>
+      {/* Pão de cima */}
+      <mesh position={[0, 0.4, 0]}>
+        <sphereGeometry args={[0.8, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        <meshPhongMaterial map={bunTexture} />
+      </mesh>
+      
+      {/* Carne */}
+      <mesh position={[0, 0.1, 0]}>
+        <cylinderGeometry args={[0.7, 0.7, 0.2, 32]} />
+        <meshPhongMaterial color={0x8B4513} />
+      </mesh>
+      
+      {/* Queijo */}
+      <mesh position={[0, 0.25, 0]}>
+        <cylinderGeometry args={[0.75, 0.75, 0.05, 32]} />
+        <meshPhongMaterial color={0xFFD700} />
+      </mesh>
+      
+      {/* Pão de baixo */}
+      <mesh position={[0, -0.1, 0]}>
+        <cylinderGeometry args={[0.8, 0.8, 0.2, 32]} />
+        <meshPhongMaterial map={bunTexture} />
+      </mesh>
+    </group>
+  );
+}
+
+// Refrigerante orbitando
+function OrbitingSoda() {
+  const sodaRef = useRef();
+  const orbitRadius = 4.5;
+  
+  useFrame((state) => {
+    if (sodaRef.current) {
+      const time = state.clock.elapsedTime;
+      const offset = Math.PI; // 180 graus
+      sodaRef.current.position.x = Math.cos(time * 0.5 + offset) * orbitRadius;
+      sodaRef.current.position.z = Math.sin(time * 0.5 + offset) * orbitRadius;
+      sodaRef.current.position.y = Math.sin(time * 0.6) * 0.4;
+      sodaRef.current.rotation.y += 0.01;
+    }
+  });
+  
+  return (
+    <group ref={sodaRef} scale={[0.25, 0.25, 0.25]}>
+      {/* Lata */}
+      <mesh position={[0, 0, 0]}>
+        <cylinderGeometry args={[0.5, 0.5, 2, 32]} />
+        <meshPhongMaterial color={0xFF0000} metalness={0.8} roughness={0.2} />
+      </mesh>
+      
+      {/* Tampa */}
+      <mesh position={[0, 1, 0]}>
+        <cylinderGeometry args={[0.5, 0.5, 0.1, 32]} />
+        <meshPhongMaterial color={0xC0C0C0} metalness={0.9} roughness={0.1} />
+      </mesh>
+      
+      {/* Logo simulado */}
+      <mesh position={[0, 0.2, 0.51]}>
+        <planeGeometry args={[0.8, 0.4]} />
+        <meshPhongMaterial color={0xFFFFFF} />
+      </mesh>
+    </group>
+  );
+}
+
+// Sushi orbitando
+function OrbitingSushi() {
+  const sushiRef = useRef();
+  const orbitRadius = 3.5;
+  
+  const riceTexture = new THREE.TextureLoader().load('https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=500&auto=format&fit=crop');
+  
+  useFrame((state) => {
+    if (sushiRef.current) {
+      const time = state.clock.elapsedTime;
+      const offset = (3 * Math.PI) / 2; // 270 graus
+      sushiRef.current.position.x = Math.cos(time * 0.5 + offset) * orbitRadius;
+      sushiRef.current.position.z = Math.sin(time * 0.5 + offset) * orbitRadius;
+      sushiRef.current.position.y = Math.sin(time * 0.7) * 0.2;
+      sushiRef.current.rotation.y += 0.025;
+    }
+  });
+  
+  return (
+    <group ref={sushiRef} scale={[0.4, 0.4, 0.4]}>
+      {/* Arroz */}
+      <mesh position={[0, 0, 0]}>
+        <cylinderGeometry args={[0.6, 0.6, 0.3, 32]} />
+        <meshPhongMaterial map={riceTexture} />
+      </mesh>
+      
+      {/* Peixe */}
+      <mesh position={[0, 0.2, 0]}>
+        <boxGeometry args={[1, 0.1, 0.8]} />
+        <meshPhongMaterial color={0xFF6B6B} />
+      </mesh>
+      
+      {/* Nori (alga) */}
+      <mesh position={[0, 0.05, 0]}>
+        <cylinderGeometry args={[0.65, 0.65, 0.02, 32]} />
+        <meshPhongMaterial color={0x2F4F2F} />
+      </mesh>
+    </group>
+  );
+}
+
 // Planeta Terra component
 function Model({ position, rotation }) {
   const modelRef = useRef();
@@ -226,6 +408,12 @@ function Scene() {
       
       {/* Main model */}
       <Model position={position} rotation={rotation} />
+      
+      {/* Comidas orbitando */}
+      <OrbitingPizza />
+      <OrbitingBurger />
+      <OrbitingSoda />
+      <OrbitingSushi />
       
       {/* Lighting */}
       <ambientLight intensity={0.5} />
